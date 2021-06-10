@@ -19,10 +19,10 @@ funciona de la misma manera que un dispositivo móvil)
 ```
 
 # Construido con 🛠️
-* [React Native](https://reactnative.dev/) - Lenguaje de Frontend
+* [React Native](https://reactnative.dev/) - Libreria de Frontend
 * [MaterialUI](https://material-ui.com/) - UI Framework
 * [Redux](https://es.redux.js.org/) - Libreria para manejo del estado
-* [Node](https://nodejs.org/es/) - Lenguaje de Backend
+* [Node](https://nodejs.org/es/) - Entorno en tiempo de ejecución multiplataforma
 * [Express](https://expressjs.com/es/) - Framework para Backend
 * [MongoDB](https://www.mongodb.com/) - Base de datos
 * [Mongoose](https://mongoosejs.com/) - Framework para modelado de base de datos
