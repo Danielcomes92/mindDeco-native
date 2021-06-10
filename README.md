@@ -12,12 +12,12 @@ npm install
 
 # Construido con 🛠️
 * [React Native](https://reactnative.dev/) - Lenguaje de Frontend
+* [MaterialUI](https://material-ui.com/) - UI Framework
 * [Redux](https://es.redux.js.org/) - Libreria para manejo del estado
 * [Node](https://nodejs.org/es/) - Lenguaje de Backend
 * [Express](https://expressjs.com/es/) - Framework para Backend
 * [MongoDB](https://www.mongodb.com/) - Base de datos
 * [Mongoose](https://mongoosejs.com/) - Framework para modelado de base de datos
-* [MaterialUI](https://material-ui.com/) - UI Framework
 
 # Autores ✒️
 * **Francesca Pozzolo** - [Francesca](https://github.com/francescapozzolo)
