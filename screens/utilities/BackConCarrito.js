@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { View, StyleSheet, ImageBackground, Text, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, StyleSheet, Text, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 import { Ionicons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons'; 
 import { SimpleLineIcons } from '@expo/vector-icons'; 
 
-import authActions from '../redux/actions/authActions'
-import carritoActions from '../redux/actions/carritoActions'
+import authActions from '../../redux/actions/authActions'
+import carritoActions from '../../redux/actions/carritoActions'
 
 import { useNavigation } from '@react-navigation/core';
 
-
-const Header = (props) => {
+const BackConCarrito = (props) => {
     const navigation = useNavigation();
+
+    const [modalOptions, setModalOptions] = useState(false)
+    const [unitsInCart, setUnitsInCart] = useState(0)
 
     const handleAccess = () => {
         navigation.navigate('access')
         setModalOptions(!modalOptions)
     }
 
-    const [unitsInCart, setUnitsInCart] = useState(0)
 
     useEffect(() => {
         productos()
@@ -31,13 +32,15 @@ const Header = (props) => {
             const array = await props.obtenerProductos(props.userLogged)
             setUnitsInCart(array.carrito.length)
         }
-    }
+    }  
     
     return (
         <View style={styles.navbar}>
             <View style={styles.innerNavbar}>
                 <View style={styles.menuHambContainer}>
-                    <Ionicons name="menu-outline" size={35} color="white" onPress={ () => props.props.navigation.openDrawer() } />
+                    <TouchableOpacity onPress={ () => navigation.navigate(props.navigateTo)} >
+                        <Ionicons name="chevron-back" size={32} color='white'/>
+                    </TouchableOpacity>
                     <Text style={styles.textMenuHamb}>{props.userLogged && `Hola ${props.userLogged.nombre}!`}</Text>
                 </View>
                 <View style={{flexDirection: 'row', alignItems: 'center', marginRight: 8, position: 'relative'}}>
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
     modalUserOptions: {
         position: 'absolute',
         right: -12,
-        top: 40,
+        top: 37,
         backgroundColor: 'white',
         padding: 4,
         shadowColor: "#000",
@@ -132,5 +135,4 @@ const mapDispatchToProps = {
     obtenerProductos: carritoActions.obtenerProductos,
 }
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(BackConCarrito);

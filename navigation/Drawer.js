@@ -1,11 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerItem } from '@react-navigation/drawer';
 import React, { useEffect } from 'react';
-import { AuthStack, HomeStack, CitiesStack } from './Stack';
+import { AuthStack, CarritoStack, HomeStack } from './Stack';
 import { Ionicons } from '@expo/vector-icons'
 import { connect } from 'react-redux';
-
+import DrawerContent from './DrawerContent'
 import authActions from '../redux/actions/authActions'
+import Toast from 'react-native-toast-message';
 
 const Drawer = createDrawerNavigator();
 
@@ -15,7 +16,11 @@ const MyDrawer = (props) => {
             let token = await AsyncStorage.getItem('token')
             return token
         } catch(e) {
-            alert('Internal database error, try in a moment')
+            Toast.show({
+                text1: 'Oops!',
+                text2: 'Error interno del servidor, intenta más tarde por favor',
+                type: 'error'
+            });
             console.log(e)
         }
     }
@@ -25,7 +30,11 @@ const MyDrawer = (props) => {
             let userStoraged = await AsyncStorage.getItem('userLogged')
             return JSON.parse(userStoraged)
         } catch (e) {
-            alert('Internal database error, try in a moment')
+            Toast.show({
+                text1: 'Oops!',
+                text2: 'Error interno del servidor, intenta más tarde por favor',
+                type: 'error'
+            });
             console.log(e)
         }
     }
@@ -40,10 +49,14 @@ const MyDrawer = (props) => {
                     ...userStoraged
                 }
                 if(userStoraged && token) {
-                    props.loginWithLS(userStorageObj)
+                    props.logInForced(userStorageObj)
                 }
             } catch(e) {
-                alert('Internal database error, try in a moment')
+                Toast.show({
+                text1: 'Oops!',
+                text2: 'Error interno del servidor, intenta más tarde por favor',
+                type: 'error'
+            });
                 console.log(e)
             }
         }
@@ -56,24 +69,29 @@ const MyDrawer = (props) => {
     return(
         <>  
             <Drawer.Navigator
-                drawerType={'back'}
                 drawerStyle={{
                     backgroundColor: '#eeeeee',
                     width: '50%'
                 }}
+                drawerContent={props => <DrawerContent {...props} />}
             >
                 <Drawer.Screen name='home' component={ HomeStack } options={{
                     drawerIcon: () => ( <Ionicons name="home-sharp" size={24} color={'#000100'}/> ),
-                    title: 'Home'
+                    title: 'Inicio'
                 }} />
-                
+
+                <Drawer.Screen name='carrito' component={ CarritoStack } options={{
+                    drawerIcon: () => ( <Ionicons name="cart" size={24} color={'#000100'}/> ),
+                    title: 'Carrito'
+                }} />
+
                 {
                     !props.userLogged && <Drawer.Screen name='access' component={ AuthStack } options={{
                         drawerIcon: () => ( <Ionicons name="key" size={24} color={'#000100'}/> ),
-                        title: 'Access'
+                        title: 'Ingresar'
                     }}/>
                 }
-                
+    
             </Drawer.Navigator>
         </>
     )
@@ -86,7 +104,8 @@ return {
 }
 
 const mapDispatchToProps = {
-    loginWithLS: authActions.loginWithLS
+    logInForced: authActions.logInForced,
+    logOutUser: authActions.logOutUser
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyDrawer);
