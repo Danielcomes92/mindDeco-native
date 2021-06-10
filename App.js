@@ -14,8 +14,6 @@ import { LogBox } from 'react-native';
 
 const myStore = createStore(mainReducer, applyMiddleware(thunk))
 
-
-
 function App() {
   LogBox.ignoreAllLogs();
   return (
